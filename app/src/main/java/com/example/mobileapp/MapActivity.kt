@@ -26,7 +26,9 @@ class MapActivity : AppCompatActivity(),
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
 
-
+        // Change the title in the action bar
+        getActionBar()?.setTitle("Nos parkings vu sur map");
+        getSupportActionBar()?.setTitle("Nos parkings vu sur map");
     }
     /** Called when the map is ready.  */
     override fun onMapReady(map: GoogleMap) {
