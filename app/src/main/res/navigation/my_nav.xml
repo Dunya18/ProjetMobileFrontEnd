@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/carFragment">
+
+    <fragment
+        android:id="@+id/carFragment"
+        android:name="com.example.mobileapp.fragments.CarFragment"
+        android:label="car_fragment"
+        tools:layout="@layout/car_fragment" >
+        <action
+            android:id="@+id/action_carFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.mobileapp.fragments.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment_to_carFragment"
+            app:destination="@id/carFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_reservationFormsFragment"
+            app:destination="@id/reservationFormsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reservationFormsFragment"
+        android:name="com.example.mobileapp.fragments.ReservationFormsFragment"
+        android:label="fragment_reservation_forms"
+        tools:layout="@layout/fragment_reservation_forms" >
+        <action
+            android:id="@+id/action_reservationFormsFragment_to_codeQRFragment"
+            app:destination="@id/codeQRFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.mobileapp.fragments.searchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myReservationFragment"
+        android:name="com.example.mobileapp.fragments.MyReservationFragment"
+        android:label="fragment_my_reservation"
+        tools:layout="@layout/fragment_my_reservation">
+        <action
+            android:id="@+id/action_myReservationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_myReservationFragment_to_reservationFragment"
+            app:destination="@id/reservationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mobileapp.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signUPFragment"
+            app:destination="@id/signUPFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUPFragment"
+        android:name="com.example.mobileapp.fragments.SignUPFragment"
+        android:label="fragment_sign_u_p"
+        tools:layout="@layout/fragment_sign_u_p" />
+    <fragment
+        android:id="@+id/reservationFragment"
+        android:name="com.example.mobileapp.fragments.ReservationFragment"
+        android:label="fragment_reservation"
+        tools:layout="@layout/fragment_reservation" />
+    <fragment
+        android:id="@+id/codeQRFragment"
+        android:name="com.example.mobileapp.fragments.CodeQRFragment"
+        android:label="fragment_code_q_r"
+        tools:layout="@layout/fragment_code_q_r" />
+</navigation>
