@@ -16,15 +16,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 class MapActivity : AppCompatActivity(),
     GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
-    // TODO: Recuperer tout les LatLng des parkings
 
-    private val PERTH = LatLng(-31.952854, 115.857342)
-    private val SYDNEY = LatLng(-33.87365, 151.20689)
-    private val BRISBANE = LatLng(-27.47093, 153.0235)
-
-    private var markerPerth: Marker? = null
-    private var markerSydney: Marker? = null
-    private var markerBrisbane: Marker? = null
+    lateinit var carViewModel: CarViewModel
+    private var markerParking: Marker? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -33,15 +27,48 @@ class MapActivity : AppCompatActivity(),
         mapFragment!!.getMapAsync(this)
 
 
-
     }
     /** Called when the map is ready.  */
     override fun onMapReady(map: GoogleMap) {
 
+        // initaliser carviewmodel
+        carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
+        // recuperer les parkings
+        carViewModel.loadParkings()
+        // display sur maps
+        carViewModel.data.observe( this, { data ->
+            if(data !=null){
+                var lat: Double
+                var long: Double
+                var parking : LatLng
+                for(item in data ){
+                    lat = item.latitude!!.toDouble()
+                    long = item.longitude!!.toDouble()
+                    parking = LatLng(lat,long)
+                    markerParking = map.addMarker(
+                        MarkerOptions()
+                            .position(parking)
+                            .title(item.nom)
+                    )
+                }
+                // move the camera to the last item
+
+                var i = data.size - 1
+                lat = data.get(i).latitude!!.toDouble()
+                long = data.get(i).longitude!!.toDouble()
+                parking = LatLng(lat,long)
+                map.moveCamera(CameraUpdateFactory.newLatLng(parking))
+            }
+            else{
+                Log.d(" no parking available ", "no parking available")
+            }
+        } )
+
+
 
         // Add some markers to the map, and add a data object to each marker.
 
-        markerPerth = map.addMarker(
+      /*  markerPerth = map.addMarker(
             MarkerOptions()
                 .position(PERTH)
                 .title("Perth")
@@ -63,11 +90,11 @@ class MapActivity : AppCompatActivity(),
                 .position(BRISBANE)
                 .title("Brisbane")
         )
-        markerBrisbane?.tag = 0
+        markerBrisbane?.tag = 0 */
 
         // Set the camera
 
-        map.moveCamera(CameraUpdateFactory.newLatLng(SYDNEY))
+
         // Set a listener for marker click.
         map.setOnMarkerClickListener(this)
     }
