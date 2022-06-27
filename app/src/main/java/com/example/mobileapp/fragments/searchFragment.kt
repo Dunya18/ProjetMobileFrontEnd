@@ -55,7 +55,8 @@ class searchFragment : Fragment() {
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     if(isNetworkAvailable())
-                    searchViewModel.searchByNom(query.trim().lowercase(Locale.getDefault()))
+                   // searchViewModel.searchByNom(query.trim().lowercase(Locale.getDefault()))
+                       searchViewModel.searchNearestParking(query.trim().lowercase(Locale.getDefault()))
                     return false
                 }
 

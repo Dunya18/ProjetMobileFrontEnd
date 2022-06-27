@@ -69,7 +69,6 @@ class LoginFragment : Fragment() {
             .build()
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso);
-
         // Set the dimensions of the sign-in button.
         // Set the dimensions of the sign-in button.
         val signInButton = view.findViewById<SignInButton>(R.id.sign_in_button)
@@ -208,11 +207,18 @@ class LoginFragment : Fragment() {
                 val personId = acct.id
                 val personPhoto: Uri? = acct.photoUrl
             }
+            // TODO : Check if the account already exists
+            // TODO : if not, create new account with this email and random password
+            // TODO : Get user id from the database to save it in shared preferences
             // enregistrer dans sharedPreferences le boolean is_authenticated
             val editor = sharedPreferences.edit()
             editor.putBoolean("is_authenticated", true).apply()
             editor.putString("email", acct?.email).apply()
 
+         //   editor.putString("id", user.id).apply()
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            //  finish()
+            startActivity(intent)
             // go to reservation
          //   val intent = Intent(this.requireContext(), ReservationActivity::class.java)
             //finish()

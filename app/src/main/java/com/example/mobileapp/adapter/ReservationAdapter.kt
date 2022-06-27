@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileapp.Parking
 import com.example.mobileapp.R
@@ -36,7 +38,14 @@ class ReservationAdapter(val context: Context) :
             numPlace.text = data[position].numeroPlace.toString()
             HeureEntrée.text = data[position].dateEntree.toString()
             HeureSorite.text = data[position].dateSortie.toString()
+
+            itemView.setOnClickListener {
+                val bundle = bundleOf("reservation" to data[position]._id)
+                holder.itemView.findNavController()
+                    .navigate(R.id.action_reservationFragment_to_detailsReservationFragment, bundle)
+            }
         }
+
 
 
     }

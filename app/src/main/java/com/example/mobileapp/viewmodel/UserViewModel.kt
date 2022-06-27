@@ -16,13 +16,12 @@ class UserViewModel : ViewModel() {
     var message = MutableLiveData<String>()
     var isAuth = MutableLiveData<Boolean>()
     var user = MutableLiveData<User>()
+    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        onError(throwable.localizedMessage)
+    }
 
     fun login(email: String, password: String) {
-        System.out.print("morning")
-        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-            // traitement de l’exception
-            message.value = "Une erreur s'est produit"
-        }
+
 
         loading.value = true
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
@@ -58,10 +57,6 @@ class UserViewModel : ViewModel() {
     }
     fun signup(name: String, family_name: String, phone_number: String, email: String, password: String) {
 
-        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-            // traitement de l’exception
-            message.value = "Une erreur s'est produit"
-        }
         loading.value = true
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = LoginEndpoint.createEndpoint().signup(name, family_name, email, phone_number, password)
@@ -86,6 +81,9 @@ class UserViewModel : ViewModel() {
         }
     }
 
-
+    private fun onError(message: String) {
+        //errorMessage.value = message
+        //  loading.value = false
+    }
 
 }

@@ -74,10 +74,19 @@
         android:id="@+id/reservationFragment"
         android:name="com.example.mobileapp.fragments.ReservationFragment"
         android:label="fragment_reservation"
-        tools:layout="@layout/fragment_reservation" />
+        tools:layout="@layout/fragment_reservation" >
+        <action
+            android:id="@+id/action_reservationFragment_to_detailsReservationFragment"
+            app:destination="@id/detailsReservationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/codeQRFragment"
         android:name="com.example.mobileapp.fragments.CodeQRFragment"
         android:label="fragment_code_q_r"
         tools:layout="@layout/fragment_code_q_r" />
+    <fragment
+        android:id="@+id/detailsReservationFragment"
+        android:name="com.example.mobileapp.fragments.DetailsReservationFragment"
+        android:label="fragment_details_reservation"
+        tools:layout="@layout/fragment_details_reservation" />
 </navigation>
