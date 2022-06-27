@@ -1,5 +1,6 @@
 package com.example.mobileapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mobileapp.entity.Reservation
@@ -13,36 +14,38 @@ class ReservationsViewModel : ViewModel() {
     var loading = MutableLiveData<Boolean>()
     var created = MutableLiveData<Boolean>()
     var message = MutableLiveData<String>()
-
+    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        onError(throwable.localizedMessage)
+    }
     fun getUserReservations(reservationId: String) {
-        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-            // traitement de l’exception
-            message.value = "Une erreur s'est produit"
-        }
         loading.value = true
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = ReservationEndpoint.createEndpoint().getUserReservation(reservationId)
-            withContext(Dispatchers.Main) {
-                loading.value = false
-                if (response.isSuccessful) {
-                    // or response.code() == 200
-                    val data = response.body()
-                    if (data != null) {
-                        reservations.value = data!!
+
+                val response =
+                    ReservationEndpoint.createEndpoint().getUserReservation(reservationId)
+                withContext(Dispatchers.Main) {
+                    try {
+                    loading.value = false
+                    if (response.isSuccessful) {
+                        // or response.code() == 200
+                        val data = response.body()
+                        if (data != null) {
+                            reservations.value = data!!
+                        } else {
+                            message.value = data.toString()
+                        }
                     } else {
-                        message.value = data.toString()
+                        message.value = "Une erreur s'est produit"
+                        onError(response.message())
                     }
-                } else {
-                    message.value = "Une erreur s'est produit"
-                }
+                }catch (e:Exception){
+                        Log.d("you are offline","offline")
+                    }
             }
         }
     }
     fun addReservation(dateEntree : Date,dateSortie : Date,parkingId : String,userId : String) {
-        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-            // traitement de l’exception
-            message.value = "Une erreur s'est produit"
-        }
+
         loading.value = true
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = ReservationEndpoint.createEndpoint().addRservation(dateEntree,dateSortie,parkingId,userId)
@@ -60,8 +63,13 @@ class ReservationsViewModel : ViewModel() {
                     }
                 } else {
                     message.value = "Une erreur s'est produit"
+                    onError(response.message())
                 }
             }
         }
+    }
+    private fun onError(message: String) {
+        //errorMessage.value = message
+        //  loading.value = false
     }
 }

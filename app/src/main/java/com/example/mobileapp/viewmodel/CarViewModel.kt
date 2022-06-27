@@ -1,5 +1,6 @@
 package com.example.mobileapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mobileapp.retrofit.Endpoint
@@ -23,15 +24,20 @@ class CarViewModel : ViewModel() {
     fun loadParkings() {
         if(data.value==null) {
             CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-                val response = Endpoint.createEndpoint().getAllParkings()
-                withContext(Dispatchers.Main) {
-                    if (response.isSuccessful && response.body() != null) {
-                        loading.value = false
-                       data.postValue(response.body())
 
-                    } else {
-                        onError(response.message())
-                    }
+                    val response = Endpoint.createEndpoint().getAllParkings()
+                    withContext(Dispatchers.Main) {
+                        try {
+                        if (response.isSuccessful && response.body() != null) {
+                            loading.value = false
+                            data.postValue(response.body())
+
+                        } else {
+                            onError(response.message())
+                        }
+                    }catch (e:Exception){
+                            Log.d("you are offline","offline")
+                        }
                 }
             }
 

@@ -38,12 +38,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager. findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.navBottom,navController)
-        val maps = findViewById<Button>(R.id.maps) as Button
-        maps.setOnClickListener {
-            val intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
-            invalidateOptionsMenu()
-        }
         // Change the title in the action bar
         getActionBar()?.setTitle("My Parking");
         getSupportActionBar()?.setTitle("My Parking");

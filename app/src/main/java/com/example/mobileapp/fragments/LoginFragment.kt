@@ -3,8 +3,10 @@ package com.example.mobileapp.fragments
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -110,7 +112,11 @@ class LoginFragment : Fragment() {
         else {
             userViewModel = ViewModelProvider(this)[(UserViewModel::class.java)]
             // login
+            if(isNetworkAvailable())
             userViewModel.login(txtEmail,txtPassword)
+            else{
+                Log.d("offline","he is offline")
+            }
 
             // add users data
 
@@ -220,5 +226,11 @@ class LoginFragment : Fragment() {
             //startActivity(intent)
         }
     }
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
+
 
 }

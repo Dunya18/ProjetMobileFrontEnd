@@ -1,5 +1,7 @@
 package com.example.mobileapp.fragments
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -52,6 +54,7 @@ class searchFragment : Fragment() {
         searchBar.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
+                    if(isNetworkAvailable())
                     searchViewModel.searchByNom(query.trim().lowercase(Locale.getDefault()))
                     return false
                 }
@@ -74,5 +77,10 @@ class searchFragment : Fragment() {
             val adapter = SearchAdapter(view.context, searchList)
             recyclerView.adapter = adapter
         }
+    }
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 }

@@ -7,7 +7,7 @@ import java.util.*
 @Entity(tableName = "reservations")
 data class Reservation(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     var _id: String,
     var dateEntree: Date,
     var dateSortie: Date,

@@ -11,6 +11,9 @@ class SearchViewModel: ViewModel() {
     var loading = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
     var searchList = MutableLiveData<List<Parking>>()
+    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        onError(throwable.localizedMessage)
+    }
 
 
 
@@ -18,14 +21,11 @@ class SearchViewModel: ViewModel() {
         val body = LinkedHashMap<String, String?>()
         body["term"] = term
 
-        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-            // traitement de l’exception
-            message.value = "Une erreur s'est produit"
-        }
         loading.value = true
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = SearchEndPoint.createEndpoint().searchByNom(body)
             withContext(Dispatchers.Main) {
+                try{
                 loading.value = false
                 if (response.isSuccessful) {
                     // or response.code() == 200
@@ -38,8 +38,18 @@ class SearchViewModel: ViewModel() {
                     }
                 } else {
                     message.value = "Une erreur s'est produit"
+                        onError(response.message())
+
                 }
+            }catch (e:Exception){
+                    Log.d("you are offline","offline")
+            }
             }
         }
     }
+    private fun onError(message: String) {
+        //errorMessage.value = message
+        //  loading.value = false
+    }
+
 }

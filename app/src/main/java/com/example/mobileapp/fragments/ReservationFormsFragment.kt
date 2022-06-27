@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -182,6 +183,7 @@ class ReservationFormsFragment : Fragment() {
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         DateEntree = SimpleDateFormat(myFormat).parse(date+" "+Hour1)
         DateSortie = SimpleDateFormat(myFormat).parse(date+" "+Hour2)
+        if(isNetworkAvailable())
         reservationsViewModel.addReservation(DateEntree,DateSortie,parkingID,userID)
         reservationsViewModel.message.observe(this) { message ->
             if (message != null) {
@@ -196,5 +198,10 @@ class ReservationFormsFragment : Fragment() {
             }
         }
 
+    }
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 }

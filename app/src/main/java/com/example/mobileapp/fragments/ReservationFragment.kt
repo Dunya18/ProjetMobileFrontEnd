@@ -2,7 +2,9 @@ package com.example.mobileapp.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import com.example.mobileapp.adapter.ReservationAdapter
 import com.example.mobileapp.viewmodel.CarViewModel
 import com.example.mobileapp.viewmodel.ReservationsViewModel
 import androidx.lifecycle.Observer
+import com.example.mobileapp.AppDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,22 +55,48 @@ class ReservationFragment : Fragment() {
 
         val id = sharedPreferences.getString("id","DEFAULT")
 
+        // instanciate the database object
+        val appDatabase = AppDatabase.buildDatabase(view.context)
+        // get dao object
+        val reservationDao = appDatabase?.getReservationDao()
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.reservationsRecycler)
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
         adapter = ReservationAdapter(requireContext())
         recyclerView.adapter = adapter
-        reservationsViewModel.getUserReservations(id!!)
+
+            reservationsViewModel.getUserReservations(id!!)
+
+            Log.d("offline","he is offline")
+
+            reservationsViewModel.reservations.observe(requireActivity(), Observer {  data ->
+
+                // save user reservations with sqllite
+
+                adapter.setReservations(data)
+                reservationDao?.saveReservations(data)
+
+
+            })
+             val savedData = reservationDao?.getUserReservation(id!!)
+            adapter.setReservations(savedData!!)
+        //}
 
         // add Observers
         // loading observer
         // Error message observer
         // List parking observer
-        reservationsViewModel.reservations.observe(requireActivity(), Observer {  data ->
-            adapter.setReservations(data)
 
-        })
 
+
+
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
 }

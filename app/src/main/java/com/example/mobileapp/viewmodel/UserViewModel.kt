@@ -26,28 +26,32 @@ class UserViewModel : ViewModel() {
 
         loading.value = true
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = LoginEndpoint.createEndpoint().login(email,password)
+            val response = LoginEndpoint.createEndpoint().login(email, password)
             withContext(Dispatchers.Main) {
-                loading.value = false
-                if (response.isSuccessful) {
-                    // or response.code() == 200
-                    val data = response.body()
-                   // user.value = data!!
-                    if (data!= null) {
-                        // Save the user
+                try {
+                    loading.value = false
+                    if (response.isSuccessful) {
+                        // or response.code() == 200
+                        val data = response.body()
+                        // user.value = data!!
+                        if (data != null) {
+                            // Save the user
 
-                        isAuth.value = true
-                        // add user
-                   user.value = data!!
-                        print("afternon")
+                            isAuth.value = true
+                            // add user
+                            user.value = data!!
+                            print("afternon")
+                        } else {
+
+                            isAuth.value = false
+                            message.value = data.toString()
+                        }
                     } else {
 
-                        isAuth.value = false
-                        message.value = data.toString()
+                        message.value = "Une erreur s'est produit"
                     }
-                } else {
-
-                    message.value = "Une erreur s'est produit"
+                }catch (e:Exception){
+                    Log.d("you are offline","offline")
                 }
             }
         }
