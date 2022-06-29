@@ -15,6 +15,7 @@ class UserViewModel : ViewModel() {
     var loading = MutableLiveData<Boolean>()
     var message = MutableLiveData<String>()
     var isAuth = MutableLiveData<Boolean>()
+    var exist = MutableLiveData<Boolean>()
     var user = MutableLiveData<User>()
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         onError(throwable.localizedMessage)
@@ -80,7 +81,41 @@ class UserViewModel : ViewModel() {
             }
         }
     }
+    fun checkExistance(email: String) {
 
+
+        loading.value = true
+        CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = LoginEndpoint.createEndpoint().checkExistance(email)
+            withContext(Dispatchers.Main) {
+                try {
+                    loading.value = false
+                    if (response.isSuccessful) {
+                        // or response.code() == 200
+                        val data = response.body()
+                        // user.value = data!!
+                        if (data != null) {
+                            // Save the user
+
+                            isAuth.value = true
+                            // add user
+                            exist.value = data!!
+                            print("afternon")
+                        } else {
+
+                            isAuth.value = false
+                            message.value = data.toString()
+                        }
+                    } else {
+
+                        message.value = "Une erreur s'est produit"
+                    }
+                }catch (e:Exception){
+                    Log.d("you are offline",e.toString())
+                }
+            }
+        }
+    }
     private fun onError(message: String) {
         //errorMessage.value = message
         //  loading.value = false

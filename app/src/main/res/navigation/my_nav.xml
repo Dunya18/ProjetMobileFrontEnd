@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_detailsFragment_to_reservationFormsFragment"
             app:destination="@id/reservationFormsFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_rateParkingFragment"
+            app:destination="@id/rateParkingFragment" />
     </fragment>
     <fragment
         android:id="@+id/reservationFormsFragment"
@@ -43,6 +46,9 @@
         <action
             android:id="@+id/action_searchFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_advancedSearchFragment"
+            app:destination="@id/advancedSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/myReservationFragment"
@@ -89,4 +95,32 @@
         android:name="com.example.mobileapp.fragments.DetailsReservationFragment"
         android:label="fragment_details_reservation"
         tools:layout="@layout/fragment_details_reservation" />
+    <fragment
+        android:id="@+id/advancedSearchFragment"
+        android:name="com.example.mobileapp.fragments.AdvancedSearchFragment"
+        android:label="fragment_advanced_search"
+        tools:layout="@layout/fragment_advanced_search" >
+        <action
+            android:id="@+id/action_advancedSearchFragment_to_advancedSearchResultsFragment"
+            app:destination="@id/advancedSearchResultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/advancedSearchResultsFragment"
+        android:name="com.example.mobileapp.fragments.AdvancedSearchResultsFragment"
+        android:label="fragment_advanced_search_results"
+        tools:layout="@layout/fragment_advanced_search_results" />
+    <fragment
+        android:id="@+id/rateParkingFragment"
+        android:name="com.example.mobileapp.fragments.RateParkingFragment"
+        android:label="fragment_rate_parking"
+        tools:layout="@layout/fragment_rate_parking" >
+        <action
+            android:id="@+id/action_rateParkingFragment_to_myRatesFragment"
+            app:destination="@id/myRatesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myRatesFragment"
+        android:name="com.example.mobileapp.fragments.MyRatesFragment"
+        android:label="fragment_my_rates"
+        tools:layout="@layout/fragment_my_rates" />
 </navigation>

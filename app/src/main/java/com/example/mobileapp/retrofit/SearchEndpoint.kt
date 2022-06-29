@@ -1,4 +1,5 @@
 package com.example.mobileapp.retrofit
+import com.example.mobileapp.LatLng
 import com.example.mobileapp.Parking
 import com.example.mobileapp.url
 import retrofit2.Response
@@ -14,6 +15,16 @@ interface SearchEndPoint {
     @GET("parkings/search/{adress}")
     suspend fun searchNearestParking(@Path("adress") adress : String): Response<List<Parking>>
 
+    @GET("parkings/latlong/{adress}")
+    suspend fun getLatLong(@Path("adress") adress : String): Response<LatLng>
+
+    @GET("parkings/adSearch/{maxprice}")
+    suspend fun advancedResearch(@Path("maxprice") maxprice : Int): Response<List<Parking>>
+
+    @POST("parkings/adSearch")
+    suspend fun advancedSearch(@Field("maxprice") maxprice : Double,
+                                  @Field("address") address: String ,
+                                  @Field("maxdistance") maxdistance : Double): Response<List<Parking>>
     companion object {
         private var endpoint: SearchEndPoint? = null
         fun createEndpoint(): SearchEndPoint {

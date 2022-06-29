@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
@@ -19,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -62,6 +64,8 @@ class DetailsFragment : Fragment() {
     lateinit var mContext: Context
     lateinit var timee: TextView
     lateinit var distancee: TextView
+    lateinit var sharedPreferences : SharedPreferences
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
@@ -91,53 +95,58 @@ class DetailsFragment : Fragment() {
         val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
             // traitement de l’exception
 //            viewModel.message.value = ""
-          //  Log.d("hello-data", throwable.toString())
+            //  Log.d("hello-data", throwable.toString())
 
         }
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
 //            viewModel.loading.value = true
-            val response = Endpoint.createEndpoint().getParkingByID(requireArguments().getString("parking"))
+            val response =
+                Endpoint.createEndpoint().getParkingByID(requireArguments().getString("parking"))
             withContext(Dispatchers.Main) {
 //                vm.loading.value = false
 
 
-                if (response.isSuccessful  && response.body() != null) {
+                if (response.isSuccessful && response.body() != null) {
                     val data = response.body()
                     // here the adapter
-                        vm.actualParking.value = data
-                   if (data != null) {
+                    vm.actualParking.value = data
+                    if (data != null) {
                         this@DetailsFragment.parking = data
 
                         view.findViewById<TextView>(R.id.textView3).text = parking.nom
                         view.findViewById<TextView>(R.id.textView4).text = parking.commune
-                       // set ouvert ou fermé
-                       val rightNow = Calendar.getInstance()
-                       val currentHourIn24Format: Int =rightNow.get(Calendar.HOUR_OF_DAY) // return the hour in 24 hrs format (ranging from 0-23)
-                       if (parking.horraireFerm!! > currentHourIn24Format)
-                       {
-                           view.findViewById<TextView>(R.id.textView5).text = "Ouvert"
-                           view.findViewById<TextView>(R.id.textView5).setTextColor(Color.parseColor("#0aad3f"))
+                        // set ouvert ou fermé
+                        val rightNow = Calendar.getInstance()
+                        val currentHourIn24Format: Int =
+                            rightNow.get(Calendar.HOUR_OF_DAY) // return the hour in 24 hrs format (ranging from 0-23)
+                        if (parking.horraireFerm!! > currentHourIn24Format) {
+                            view.findViewById<TextView>(R.id.textView5).text = "Ouvert"
+                            view.findViewById<TextView>(R.id.textView5)
+                                .setTextColor(Color.parseColor("#0aad3f"))
 
-                       }
-                       else{
-                           view.findViewById<TextView>(R.id.textView5).text = "Fermé"
-                           view.findViewById<TextView>(R.id.textView5).setTextColor(Color.parseColor("#FF0000"))
-                       }
+                        } else {
+                            view.findViewById<TextView>(R.id.textView5).text = "Fermé"
+                            view.findViewById<TextView>(R.id.textView5)
+                                .setTextColor(Color.parseColor("#FF0000"))
+                        }
 
-                        view.findViewById<TextView>(R.id.textView7).text = (parking.nbPlace).toString()
-                        view.findViewById<TextView>(R.id.textView10).text = parking.horraireOuver.toString()
-                       val Day: Int =rightNow.get(Calendar.DAY_OF_WEEK)
-                       view.findViewById<TextView>(R.id.textView11).text = Day.toString()
+                        view.findViewById<TextView>(R.id.textView7).text =
+                            (parking.nbPlace).toString()
+                        view.findViewById<TextView>(R.id.textView10).text =
+                            parking.horraireOuver.toString()
+                        val Day: Int = rightNow.get(Calendar.DAY_OF_WEEK)
+                        view.findViewById<TextView>(R.id.textView11).text = Day.toString()
                         distancee = view.findViewById<TextView>(R.id.textView8)
                         distancee.text = "loading .."
                         timee = view.findViewById<TextView>(R.id.textView14)
                         timee.text = "loading .."
-                        view.findViewById<TextView>(R.id.textView12).text = parking.horraireFerm.toString()
+                        view.findViewById<TextView>(R.id.textView12).text =
+                            parking.horraireFerm.toString()
 
                         view.findViewById<TextView>(R.id.textView18).text = parking.tarifHeure
                         mFusedLocationClient =
                             LocationServices.getFusedLocationProviderClient(requireActivity())
-                       getLastLocation(parking)
+                        getLastLocation(parking)
 
                         view.findViewById<View>(R.id.floatingActionButton).setOnClickListener {
                             val intent = Intent(
@@ -158,14 +167,13 @@ class DetailsFragment : Fragment() {
                                     "You're not connected",
                                     Toast.LENGTH_LONG
                                 ).show()
-                            }
-                            else {
+                            } else {
 
-                                   view.findNavController()
-                                        .navigate(R.id.action_detailsFragment_to_reservationFormsFragment)
+                                view.findNavController()
+                                    .navigate(R.id.action_detailsFragment_to_reservationFormsFragment)
 
                                 // instanciate the database object
-                              /* val appDatabase = AppDatabase.buildDatabase(view.context)
+                                /* val appDatabase = AppDatabase.buildDatabase(view.context)
 
                                 // get dao object
                                 val reservationDao = appDatabase?.getReservationDao()
@@ -197,6 +205,32 @@ class DetailsFragment : Fragment() {
             }
         }
 
+        // rates
+        val comments = view.findViewById<ImageButton>(R.id.imageButton)
+        val rates = view.findViewById<ImageButton>(R.id.imageButton2)
+        comments.setOnClickListener {
+            sharedPreferences =
+                requireActivity().getSharedPreferences("app_state", Context.MODE_PRIVATE)
+            var auth = sharedPreferences.getBoolean("is_authenticated", false)
+            if (!auth) {
+                Toast.makeText(
+                    view.context,
+                    "You're not connected",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+
+                view.findNavController()
+                    .navigate(R.id.action_detailsFragment_to_rateParkingFragment)
+            }
+
+        }
+        rates.setOnClickListener {
+
+            view.findNavController()
+                .navigate(R.id.action_detailsFragment_to_rateParkingFragment)
+
+        }
     }
 
 
@@ -210,7 +244,7 @@ class DetailsFragment : Fragment() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-                        this.userLocation = LatLng(location.latitude, location.longitude)
+                      //  this.userLocation = LatLng(location.latitude, location.longitude)
                         GlobalScope.launch(Dispatchers.IO) {
 
                             val apiUrl =

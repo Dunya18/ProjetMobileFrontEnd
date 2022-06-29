@@ -21,8 +21,8 @@ interface ReservationDao {
     @Insert
     fun saveReservations(reservations: List<Reservation>)
 
-    @Delete
-   fun deleteUserReservation(reservation: Reservation)
+    @Query("DELETE FROM reservations")
+   fun deleteUserReservation()
 //    @Update
 //    fun updateUser(user: User)
 //

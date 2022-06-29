@@ -83,6 +83,13 @@ class MainActivity : AppCompatActivity() {
                 editor.remove("is_authenticated")
                 editor.apply()
                 userViewModel.user.postValue(null)
+
+                // instanciate the database object
+                val appDatabase = AppDatabase.buildDatabase(this)
+                // get dao object
+                val reservationDao = appDatabase?.getReservationDao()
+                //delete
+                reservationDao?.deleteUserReservation()
                 // go to home
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

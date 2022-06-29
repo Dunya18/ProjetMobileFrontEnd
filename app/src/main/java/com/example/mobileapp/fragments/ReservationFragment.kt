@@ -75,6 +75,7 @@ class ReservationFragment : Fragment() {
                 // save user reservations with sqllite
 
                 adapter.setReservations(data)
+                reservationDao?.deleteUserReservation()
                 reservationDao?.saveReservations(data)
 
 

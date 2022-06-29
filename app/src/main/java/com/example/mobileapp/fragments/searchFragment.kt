@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileapp.R
@@ -49,8 +51,13 @@ class searchFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
 
         val searchBar = view.findViewById<SearchView>(R.id.search)
+        val advancedSearch = view.findViewById<Button>(R.id.advancedSearch)
         val searchViewModel = ViewModelProvider(requireActivity())[SearchViewModel::class.java]
 
+        advancedSearch.setOnClickListener {
+            view.findNavController()
+                .navigate(R.id.action_searchFragment_to_advancedSearchFragment)
+        }
         searchBar.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {

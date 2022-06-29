@@ -5,10 +5,7 @@ import com.example.mobileapp.url
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FieldMap
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface LoginEndpoint {
     @POST("auth/login")
@@ -22,6 +19,9 @@ interface LoginEndpoint {
                        @Field("email") email : String,
                        @Field("phone_number") phone_number : String,
                       @Field("password") password: String): Response<User>
+    @POST("auth/existance")
+    @FormUrlEncoded
+    suspend fun checkExistance(@Field("email") email : String): Response<Boolean>
     companion object {
         var endpoint: LoginEndpoint? = null
         fun createEndpoint(): LoginEndpoint {
