@@ -21,11 +21,11 @@ class RateViewModel : ViewModel() {
     }
 
 
-    fun getRatedParking(userId : String) {
+    fun getRatedParking(parkingId : String) {
         if(data.value==null) {
             CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
 
-                val response = RateEndpoint.createEndpoint().getRatedParking(userId)
+                val response = RateEndpoint.createEndpoint().getRatedParking(parkingId)
                 withContext(Dispatchers.Main) {
                     try {
                         if (response.isSuccessful && response.body() != null) {

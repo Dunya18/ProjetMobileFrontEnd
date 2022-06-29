@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_detailsFragment_to_rateParkingFragment"
             app:destination="@id/rateParkingFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_myRatesFragment"
+            app:destination="@id/myRatesFragment" />
     </fragment>
     <fragment
         android:id="@+id/reservationFormsFragment"

@@ -10,8 +10,8 @@ import retrofit2.http.*
 
 interface RateEndpoint {
 
-    @GET("user/rate/{userId}")
-    suspend fun getRatedParking(@Path("userId") userId:String): Response<List<Rate>>
+    @GET("user/rate/{parkingId}")
+    suspend fun getRatedParking(@Path("parkingId") parkingId:String): Response<List<Rate>>
 
     @POST("user/rate")
     @FormUrlEncoded

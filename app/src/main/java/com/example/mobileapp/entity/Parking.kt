@@ -13,7 +13,8 @@ data class Parking (
     var horraireOuver : Int?,
     var horraireFerm : Int?,
     var tarifHeure : String?,
-    var nbPlace: Int?
+    var nbPlace: Int?,
+    var reserved: Int?
     ):Serializable
 {
 }

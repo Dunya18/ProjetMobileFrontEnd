@@ -19,18 +19,6 @@
         android:layout_height="wrap_content"
         >
 
-        <TextView
-            android:id="@+id/nom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nom du parking : "
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.104"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.017" />
 
         <TextView
             android:id="@+id/note"
@@ -38,8 +26,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Note attribuée : "
-            app:layout_constraintStart_toStartOf="@+id/nom"
-            app:layout_constraintTop_toBottomOf="@+id/nom" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.104"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.017" />
 
         <TextView
             android:id="@+id/comment"
@@ -53,25 +45,8 @@
             app:layout_constraintTop_toBottomOf="@+id/note"
             app:layout_constraintVertical_bias="1.0" />
 
-        <TextView
-            android:id="@+id/nomParking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="nom du parking : "
-            app:layout_constraintBottom_toBottomOf="@+id/nom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.01"
-            app:layout_constraintStart_toEndOf="@+id/nom" />
 
-        <TextView
-            android:id="@+id/noteParking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Note parking : "
-            app:layout_constraintBottom_toBottomOf="@+id/note"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/nomParking" />
+
 
         <TextView
             android:id="@+id/commentParking"
@@ -82,5 +57,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/noteParking" />
+
+        <RatingBar
+            android:id="@+id/noteParking"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="170dp"
+            android:layout_marginEnd="96dp"
+            app:layout_constraintBottom_toBottomOf="@+id/note"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/note"
+            app:layout_constraintStart_toStartOf="@id/note" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

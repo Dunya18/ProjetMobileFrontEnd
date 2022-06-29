@@ -131,7 +131,7 @@ class DetailsFragment : Fragment() {
                         }
 
                         view.findViewById<TextView>(R.id.textView7).text =
-                            (parking.nbPlace).toString()
+                            parking.nbPlace?.let { (parking.reserved?.times(100))?.div(it).toString() } + "%"
                         view.findViewById<TextView>(R.id.textView10).text =
                             parking.horraireOuver.toString()
                         val Day: Int = rightNow.get(Calendar.DAY_OF_WEEK)
@@ -228,7 +228,7 @@ class DetailsFragment : Fragment() {
         rates.setOnClickListener {
 
             view.findNavController()
-                .navigate(R.id.action_detailsFragment_to_rateParkingFragment)
+                .navigate(R.id.action_detailsFragment_to_myRatesFragment)
 
         }
     }
