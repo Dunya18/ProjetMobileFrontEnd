@@ -111,7 +111,11 @@
         android:id="@+id/advancedSearchResultsFragment"
         android:name="com.example.mobileapp.fragments.AdvancedSearchResultsFragment"
         android:label="fragment_advanced_search_results"
-        tools:layout="@layout/fragment_advanced_search_results" />
+        tools:layout="@layout/fragment_advanced_search_results" >
+        <action
+            android:id="@+id/action_advancedSearchResultsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/rateParkingFragment"
         android:name="com.example.mobileapp.fragments.RateParkingFragment"

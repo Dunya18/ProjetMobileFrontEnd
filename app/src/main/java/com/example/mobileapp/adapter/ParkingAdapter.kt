@@ -48,14 +48,16 @@ class ParkingAdapter (val context: Context): RecyclerView.Adapter<ParkingAdapter
             }
             else{
                 etat.setTextColor(Color.parseColor("#FF0000"))
-                etat.setText("Fermée")
+                etat.setText("Fermé")
             }
           //  dist.text = data[position].dist
           //  temps.text =  data[position].temps
-            taux.text = data[position].nbPlace.toString()
+
+            taux.text = data[position].nbPlace.toString() + " places"
             nom.text =  data[position].nom
             lieu.text = data[position].commune
             wilaya.text =  data[position].commune
+
 
             // set image
             Glide.with(this.itemView).load(data[position].imglink)
@@ -63,8 +65,9 @@ class ParkingAdapter (val context: Context): RecyclerView.Adapter<ParkingAdapter
                 .placeholder(R.drawable.p1)
                 .into(img)
 
+           // DownloadImageFromInternet(img)
 
-            img.setImageResource(R.drawable.p1)
+          //  img.setImageResource(R.drawable.p1)
 
             itemView.setOnClickListener {
                 val bundle = bundleOf("parking" to data[position]._id)
@@ -82,8 +85,6 @@ class ParkingAdapter (val context: Context): RecyclerView.Adapter<ParkingAdapter
 
         val nom = view.findViewById (R.id.nom) as TextView
         val etat = view.findViewById (R.id.etat) as TextView
-        val temps = view.findViewById (R.id.temps) as TextView
-        val dist = view.findViewById (R.id.distance) as TextView
         val lieu = view.findViewById (R.id.commune) as TextView
         val wilaya = view.findViewById (R.id.commune) as TextView
         val taux = view.findViewById (R.id.taux) as TextView

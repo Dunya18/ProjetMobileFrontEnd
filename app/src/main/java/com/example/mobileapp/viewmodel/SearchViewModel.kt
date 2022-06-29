@@ -1,11 +1,11 @@
 package com.example.mobileapp.viewmodel
 
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mobileapp.LatLng
 import com.example.mobileapp.Parking
-import com.example.mobileapp.retrofit.ReservationEndpoint
 import com.example.mobileapp.retrofit.SearchEndPoint
 import kotlinx.coroutines.*
 
@@ -136,12 +136,12 @@ class SearchViewModel: ViewModel() {
             }
         }
     }
-    fun advancedSearch(maxprice: Double, address: String , maxdistance : Double) {
+    fun advancedSearch(address: String, maxprice: Int, maxdistance: Int) {
         loading.value = true
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
 
             val response =
-                SearchEndPoint.createEndpoint().advancedSearch(maxprice,address, maxdistance)
+                SearchEndPoint.createEndpoint().advancedSearch(address,maxprice, maxdistance)
             withContext(Dispatchers.Main) {
                 try {
                     loading.value = false

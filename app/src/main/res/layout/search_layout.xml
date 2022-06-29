@@ -33,14 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/temps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/nom"
-            app:layout_constraintTop_toTopOf="@+id/nom" />
+
 
         <TextView
             android:id="@+id/nom"
@@ -70,13 +63,7 @@
             app:layout_constraintStart_toStartOf="@+id/commune"
             app:layout_constraintTop_toBottomOf="@+id/commune" />
 
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/taux"
-            app:layout_constraintEnd_toEndOf="@+id/temps" />
+
 
         <TextView
             android:id="@+id/taux"

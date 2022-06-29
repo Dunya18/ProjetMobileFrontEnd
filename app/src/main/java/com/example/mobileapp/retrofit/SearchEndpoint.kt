@@ -22,9 +22,10 @@ interface SearchEndPoint {
     suspend fun advancedResearch(@Path("maxprice") maxprice : Int): Response<List<Parking>>
 
     @POST("parkings/adSearch")
-    suspend fun advancedSearch(@Field("maxprice") maxprice : Double,
-                                  @Field("address") address: String ,
-                                  @Field("maxdistance") maxdistance : Double): Response<List<Parking>>
+    @FormUrlEncoded
+    suspend fun advancedSearch(@Field("address") address: String ,
+                               @Field("maxprice") maxprice : Int,
+                                  @Field("maxdistance") maxdistance : Int): Response<List<Parking>>
     companion object {
         private var endpoint: SearchEndPoint? = null
         fun createEndpoint(): SearchEndPoint {

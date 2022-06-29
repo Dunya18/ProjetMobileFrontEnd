@@ -20,6 +20,7 @@ import com.example.mobileapp.MapActivity
 import com.example.mobileapp.R
 import com.example.mobileapp.adapter.ParkingAdapter
 import com.example.mobileapp.viewmodel.CarViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CarFragment : Fragment(){
     lateinit var carViewModel: CarViewModel
@@ -80,7 +81,7 @@ class CarFragment : Fragment(){
             })
 
         // Go to maps
-        val maps = itemView.findViewById<Button>(R.id.maps) as Button
+        val maps = itemView.findViewById<FloatingActionButton>(R.id.maps)
         maps.setOnClickListener {
             val intent = Intent(requireContext(), MapActivity::class.java)
             startActivity(intent)

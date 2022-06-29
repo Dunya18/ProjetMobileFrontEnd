@@ -51,7 +51,7 @@ class AdvancedSearchFragment : Fragment() {
         val searchViewModel = ViewModelProvider(requireActivity())[SearchViewModel::class.java]
         search.setOnClickListener {
 
-            searchViewModel.advancedSearch(500.0,destination.toString(),0.0)
+            searchViewModel.advancedSearch(destination.text.toString(),Integer.parseInt(maxprice.text.toString().trim()),Integer.parseInt(distance.text.toString().trim()))
             searchViewModel.advancedSearchList.observe(this) { data ->
                 if (data != null) {
                     view.findNavController()

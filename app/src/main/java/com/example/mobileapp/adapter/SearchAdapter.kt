@@ -73,7 +73,7 @@ class SearchAdapter(val context: Context, var data: List<Parking>) :
             itemView.setOnClickListener {
                 val bundle = bundleOf("parking" to data[position]._id)
                 holder.itemView.findNavController()
-                    .navigate(R.id.action_searchFragment_to_detailsFragment, bundle)
+                    .navigate(R.id.action_advancedSearchResultsFragment_to_detailsFragment, bundle)
             }
 
         }
@@ -82,8 +82,6 @@ class SearchAdapter(val context: Context, var data: List<Parking>) :
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nom = view.findViewById (R.id.nom) as TextView
         val etat = view.findViewById (R.id.etat) as TextView
-        val temps = view.findViewById (R.id.temps) as TextView
-        val dist = view.findViewById (R.id.distance) as TextView
         val lieu = view.findViewById (R.id.commune) as TextView
         val wilaya = view.findViewById (R.id.commune) as TextView
         val taux = view.findViewById (R.id.taux) as TextView
