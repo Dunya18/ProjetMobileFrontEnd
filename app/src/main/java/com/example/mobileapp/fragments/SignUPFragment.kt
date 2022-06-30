@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.mobileapp.MainActivity
@@ -60,8 +60,11 @@ class SignUPFragment : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences("app_state", Context.MODE_PRIVATE)
 
         signup.setOnClickListener {
-
+            if(checkEmail(email.text.toString()))
             signup(name.text.toString(),family_name.text.toString(),phone_number.text.toString(),email.text.toString(),password.text.toString())
+            else
+                Toast.makeText(requireContext(), "please enter a valid email", Toast.LENGTH_LONG).show()
+
         }
     }
     private fun signup(nametxt: String, family_nametxt: String, phone_numbertxt: String, emailtxt: String, passwordtxt: String) {
@@ -114,6 +117,9 @@ class SignUPFragment : Fragment() {
 
         }
     }
-
+    private fun checkEmail(email: String): Boolean {
+        val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
+            return EMAIL_REGEX.toRegex().matches(email);
+    }
 
 }

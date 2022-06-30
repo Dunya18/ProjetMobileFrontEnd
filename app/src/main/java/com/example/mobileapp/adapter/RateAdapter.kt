@@ -42,13 +42,6 @@ class RateAdapter(val context: Context) :
         holder.apply {
             noteParking.rating = data[position].note.toFloat()
             comment.text = data[position].comment.toString()
-
-
-            itemView.setOnClickListener {
-                val bundle = bundleOf("reservation" to data[position]._id)
-                holder.itemView.findNavController()
-                    .navigate(R.id.action_reservationFragment_to_detailsReservationFragment, bundle)
-            }
         }
 
 
