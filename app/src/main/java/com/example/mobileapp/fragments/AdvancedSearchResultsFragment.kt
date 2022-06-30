@@ -14,7 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileapp.R
-import com.example.mobileapp.adapter.SearchAdapter
+import com.example.mobileapp.adapter.SearchAdvancedAdapter
 import com.example.mobileapp.viewmodel.SearchViewModel
 import java.util.*
 
@@ -60,7 +60,7 @@ class AdvancedSearchResultsFragment : Fragment() {
 
             recyclerView.layoutManager = layoutManager
         if(searchViewModel.advancedSearchList.value != null) {
-            val adapter = SearchAdapter(view.context, searchViewModel.advancedSearchList.value!!)
+            val adapter = SearchAdvancedAdapter(view.context, searchViewModel.advancedSearchList.value!!)
             recyclerView.adapter = adapter
         }
         else{

@@ -128,12 +128,11 @@ class LoginFragment : Fragment() {
             // add observer
             userViewModel.loading.observe(this) { loading ->
                 if (loading == true) {
-                    // print("heredou2"+ userViewModel.user.value)
                     connect.visibility = View.GONE
-                    // progressBar.visibility = View.VISIBLE
+                     progressBar.visibility = View.VISIBLE
                 } else {
                     connect.text = "connecter"
-                    // progressBar.visibility = View.GONE
+                     progressBar.visibility = View.GONE
                     connect.visibility = View.VISIBLE
 
                 }
@@ -164,7 +163,6 @@ class LoginFragment : Fragment() {
                  if (isAuth) {
                      email.setText("")
                      password.setText("")
-                     print("plz"+userViewModel.user.value)
                      // enregistrer dans sharedPreferences le boolean is_authenticated
                      val editor = sharedPreferences.edit()
                      editor.putBoolean("is_authenticated", true).apply()

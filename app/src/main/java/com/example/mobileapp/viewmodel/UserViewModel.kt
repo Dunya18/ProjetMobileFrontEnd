@@ -40,7 +40,6 @@ class UserViewModel : ViewModel() {
                             isAuth.value = true
                             // add user
                             user.value = data!!
-                            print("afternon")
                         } else {
 
                             isAuth.value = false
@@ -48,7 +47,7 @@ class UserViewModel : ViewModel() {
                         }
                     } else {
 
-                        message.value = "Une erreur s'est produit"
+                        message.value = "email ou mot de passe incorrect"
                     }
                 }catch (e:Exception){
                     Log.d("you are offline","offline")
@@ -76,7 +75,7 @@ class UserViewModel : ViewModel() {
                         message.value = data.toString()
                     }
                 } else {
-                    message.value = "Une erreur s'est produit"
+                    message.value = "Verifier les données entrées"
                 }
             }
         }

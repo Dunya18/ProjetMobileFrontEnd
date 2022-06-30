@@ -1,5 +1,6 @@
 package com.example.mobileapp.adapter
 
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -23,8 +24,8 @@ import java.time.LocalDateTime
 import java.util.*
 
 
-class SearchAdapter(val context: Context, var data: List<Parking>) :
-    RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
+class SearchAdvancedAdapter(val context: Context, var data: List<Parking>) :
+    RecyclerView.Adapter<SearchAdvancedAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
@@ -73,7 +74,7 @@ class SearchAdapter(val context: Context, var data: List<Parking>) :
             itemView.setOnClickListener {
                 val bundle = bundleOf("parking" to data[position]._id)
                 holder.itemView.findNavController()
-                    .navigate(R.id.action_searchFragment_to_detailsFragment, bundle)
+                    .navigate(R.id.action_advancedSearchResultsFragment_to_detailsFragment, bundle)
             }
 
         }

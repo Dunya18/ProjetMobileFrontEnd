@@ -171,31 +171,6 @@ class DetailsFragment : Fragment() {
 
                                 view.findNavController()
                                     .navigate(R.id.action_detailsFragment_to_reservationFormsFragment)
-
-                                // instanciate the database object
-                                /* val appDatabase = AppDatabase.buildDatabase(view.context)
-
-                                // get dao object
-                                val reservationDao = appDatabase?.getReservationDao()
-
-                                // create reservation object
-                                val reservation = Reservation(
-                                    0,
-                                    "test@gmail.com",
-                                    parking._id,
-                                    LocalDateTime.now()
-                                        .format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy"))
-                                        .toString(),
-                                )
-                                reservationDao?.addReservation(reservation)*/
-
-                                Toast.makeText(
-                                    view.context,
-                                    "Your reservation is successfuly added",
-                                    Toast.LENGTH_LONG
-                                ).show()
-
-
                             }
                         }
                     }
