@@ -62,7 +62,7 @@ class ReservationsViewModel : ViewModel() {
                         message.value = data.toString()
                     }
                 } else {
-                    message.value = "Une erreur s'est produit"
+                    message.value = "No places available"
                     onError(response.message())
                 }
             }

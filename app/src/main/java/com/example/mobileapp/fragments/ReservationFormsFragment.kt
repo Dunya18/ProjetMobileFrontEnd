@@ -184,27 +184,34 @@ class ReservationFormsFragment : Fragment() {
             Toast.makeText(requireContext(), "Vous devez spécifier la date et les heures ", Toast.LENGTH_LONG).show()
 
         }
-        else{
-            // transform string to date
-            val myFormat = "yyyy-MM-dd HH:mm"
-            val sdf = SimpleDateFormat(myFormat, Locale.US)
-            DateEntree = SimpleDateFormat(myFormat).parse(date+" "+Hour1)
-            DateSortie = SimpleDateFormat(myFormat).parse(date+" "+Hour2)
-            if(isNetworkAvailable())
-                reservationsViewModel.addReservation(DateEntree,DateSortie,parkingID,userID)
-            reservationsViewModel.message.observe(this) { message ->
-                if (message != null) {
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+        else {
+
+                // transform string to date
+                val myFormat = "yyyy-MM-dd HH:mm"
+                val sdf = SimpleDateFormat(myFormat, Locale.US)
+                DateEntree = SimpleDateFormat(myFormat).parse(date + " " + Hour1)
+                DateSortie = SimpleDateFormat(myFormat).parse(date + " " + Hour2)
+                if (isNetworkAvailable())
+                    reservationsViewModel.addReservation(DateEntree, DateSortie, parkingID, userID)
+                reservationsViewModel.message.observe(this) { message ->
+                    if (message != null) {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+                    }
                 }
-            }
-            reservationsViewModel.created.observe(this) { created ->
-                if (created) {
-                    Toast.makeText(requireContext(), "Reservation Added Succefully", Toast.LENGTH_LONG).show()
-                    view.findNavController()
-                        .navigate(R.id.action_reservationFormsFragment_to_codeQRFragment)
+                reservationsViewModel.created.observe(this) { created ->
+                    if (created) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Reservation Added Succefully",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        view.findNavController()
+                            .navigate(R.id.action_reservationFormsFragment_to_codeQRFragment)
+                    }
                 }
-            }
+
         }
+
 
 
     }
