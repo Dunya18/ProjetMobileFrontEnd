@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -48,17 +49,34 @@ class AdvancedSearchFragment : Fragment() {
         val distance = view.findViewById<TextView>(R.id.distance) as EditText
         val search = view.findViewById<ImageButton>(R.id.searchButton)
 
+
+
         val searchViewModel = ViewModelProvider(requireActivity())[SearchViewModel::class.java]
         search.setOnClickListener {
+            if (destination.text.toString().trim().isEmpty() || maxprice.text.toString().trim()
+                    .isEmpty() || distance.text.toString().trim().isEmpty()
+            ) {
+                Toast.makeText(
+                    requireContext(),
+                    "Vous devez remplir tout les champs",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
 
-            searchViewModel.advancedSearch(destination.text.toString(),Integer.parseInt(maxprice.text.toString().trim()),Integer.parseInt(distance.text.toString().trim()))
-            searchViewModel.advancedSearchList.observe(this) { data ->
-                if (data != null) {
-                    view.findNavController()
-                        .navigate(R.id.action_advancedSearchFragment_to_advancedSearchResultsFragment)
+                searchViewModel.advancedSearch(
+                    destination.text.toString(),
+                    Integer.parseInt(maxprice.text.toString().trim()),
+                    Integer.parseInt(distance.text.toString().trim())
+                )
+                searchViewModel.advancedSearchList.observe(this) { data ->
+                    if (data != null) {
+                        view.findNavController()
+                            .navigate(R.id.action_advancedSearchFragment_to_advancedSearchResultsFragment)
                     }
                 }
             }
+        }
+
     }
 }
 

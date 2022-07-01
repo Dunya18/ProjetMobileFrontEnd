@@ -60,6 +60,7 @@ class ParkingAdapter (val context: Context): RecyclerView.Adapter<ParkingAdapter
 
 
             // set image
+
             Glide.with(this.itemView).load(data[position].imglink)
                 .apply(RequestOptions())
                 .placeholder(R.drawable.p1)

@@ -19,15 +19,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.mobileapp.LatLng
 import com.example.mobileapp.Parking
 import com.example.mobileapp.R
@@ -115,6 +114,10 @@ class DetailsFragment : Fragment() {
 
                         view.findViewById<TextView>(R.id.textView3).text = parking.nom
                         view.findViewById<TextView>(R.id.textView4).text = parking.commune
+                        Glide.with(requireContext()).load(parking.imglink)
+                            .apply(RequestOptions())
+                            .placeholder(R.drawable.p1)
+                            .into(view.findViewById<ImageView>(R.id.imgP))
                         // set ouvert ou fermé
                         val rightNow = Calendar.getInstance()
                         val currentHourIn24Format: Int =
